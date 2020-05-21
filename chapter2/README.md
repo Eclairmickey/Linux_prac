@@ -8,9 +8,10 @@ strace -o \[log file\] 実行ファイル
 ## wtiteシステムコール
 
 
-> #include <unistd.h> 
+> #include <unistd.h>
 
 > ssize_t write(int fd , const void * buf , size_t count );
+
 
 バッファ(buf)からfdが参照するファイルへ最大countバイトを書き込む。
 ## sarコマンド
@@ -27,3 +28,4 @@ CPU上でコア1上で69%で稼働しており、親プロセスを取得する�
 
 
 
+ 
