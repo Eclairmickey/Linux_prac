@@ -2,20 +2,15 @@
 ### 3章
 
 ## fork()
-=======
-# 3章
 
-## fork関数
->>>>>>> 107c89fc68d071ef0b803414892f5bf32c766a3d
 ・同じプログラムの処理を複数のプロセスに分けて処理する時に扱う
 ・親プロセスに子プロセスのID、子プロセスには0を返すため。以下のような実行結果となる
 
 
-``` 7049
+'''
 I'm parent! my pid is 7048 and the pid of my child is 7049.
 0
 I'm child! my pid is 7049.
-<<<<<<< HEAD
 '''
 
 ## execve()
@@ -26,8 +21,3 @@ I'm child! my pid is 7049.
 
 ### fork-and-exec.c
 
-
-
-=======
-```
->>>>>>> 107c89fc68d071ef0b803414892f5bf32c766a3d
