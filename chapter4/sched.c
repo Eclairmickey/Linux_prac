@@ -40,6 +40,7 @@ static void child_fn(int id,struct timespec *buf,int nrecord,unsigned long nloop
     int i;
     for(i=0;i<nrecord;i++){
         struct timespec ts;
+
         load(nloop_per_resol);
         clock_gettime(CLOCK_MONOTONIC,&ts);
         //timespec管理
@@ -47,8 +48,7 @@ static void child_fn(int id,struct timespec *buf,int nrecord,unsigned long nloop
     }
 
     for(i=0;i<nrecord;i++){
-        printf("%d\t %ld\t %d\n",id,diff_nsec(start,buf[i])/NSECS_PER_MSEC,
-                    (i+1)*100/nrecord);
+        printf("%d\t %ld\t %d\n",id,diff_nsec(start,buf[i])/NSECS_PER_MSEC,(i+1)*100/nrecord);
     }
     exit(EXIT_SUCCESS);
 }
@@ -65,7 +65,7 @@ static pid_t *pids;
 int main(int argc,char *argv[]){
     int ret=EXIT_FAILURE;
     if(argc<4){
-        fprintf(stderr,"usage: %s <nproc> <total[ms] <resolution[ms]>\n",argv[0]);
+        fprintf(stderr,"usage: %s <nproc> <total[ms]> <resolution[ms]>\n",argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -101,6 +101,7 @@ int main(int argc,char *argv[]){
     puts("estimating workout witch takes just one milisecond");
     unsigned long nloop_per_resol=loops_per_msec()*resol;
     puts("end estimation");
+    fflush(stdout);
 
     pids=malloc(nproc*sizeof(pid_t));
     if(pids==NULL){
