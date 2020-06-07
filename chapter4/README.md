@@ -43,7 +43,8 @@ Linuxカーネルはプロセスを同時に実行しているように見せか
 # 経過時間と使用時間について
 経過時間はプロセスが開始してから終了するまでの時間のことを指す、使用時間は論理CPUが実行状態となっている時間を示す。
 以下は、論理CPU1つでプロセス数1つのときの経過時間と使用時間を取得した例である。
-'''
+
+```
 time taskset -c 0 ./sched 1 10000 10000
 estimating workout witch takes just one milisecond
 end estimation
@@ -52,5 +53,4 @@ end estimation
 real	0m13.509s
 user	0m13.476s
 sys	0m0.000s
-
-'''
+```
