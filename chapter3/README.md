@@ -6,11 +6,11 @@
 ・親プロセスに子プロセスのID、子プロセスには0を返すため。以下のような実行結果となる
 
 
-'''
+```
 I'm parent! my pid is 7048 and the pid of my child is 7049.
 0
 I'm child! my pid is 7049.
-'''
+```
 
 ## execve()
 
