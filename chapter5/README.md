@@ -24,3 +24,42 @@ $ ./segv
 before invalid access
 Segmentation fault (コアダンプ)
 ```
+
+## mmap()とmalloc()
+C言語でのメモリを確保するための関数であるmalloc()は内部的にmmap()を呼び出すことによってメモリの確保を行っている。
+しかし、mmap()はページごとにメモリを確保するためバイト単位でメモリを確保するmalloc()の挙動を実現するためには少し不十分である。そこで、glibcは事前にmmap()によってカーネルから大きなメモリを確保した上で、malloc()が発行された時にその領域から必要な分をバイト単位で切り出してプログラムを返すようにしている。また、この時にmmap()が確保した領域が足りなかった際には再びmmap()によって領域を確保するようにしている。
+
+```
+cc -o mmap  mmap.c
+eclair-mickey@eclairmickey-ThinkPad-T450s:~/Linux_prac/chapter5$ ./mmap
+*** memory map before memory allocation ***
+(略)
+successed to allocate memory : address =0x0x7f5d42cb7000; size=0x6400000*** メモリマップが成功したことを示すメッセージ
+
+*** emory map after memory allocation ***
+(略)
+7f5d42cb7000-7f5d490b7000 rw-p 00000000 00:00 0 終了アドレス
+```
+最後の行のアドレスの割当から、100MB程度のメモリが割り当てられていることがわかる。
+
+# ファイルマップ
+プロセスがファイルにアクセスする際、システムコールを使う時にファイルの領域を仮想メモリにメモリマップする機能がある。
+この時に所定の方法でmmap()を呼び出すと、ファイルの内容をメモリに読み出すことが出来る。このメモリには通常のメモリと同様にアクセスすることが出来る。
+
+```
+cc -o filemap filemap.c
+eclair-mickey@eclairmickey-ThinkPad-T450s:~/Linux_prac/chapter5$ ./filemap
+*** memory map before mapping file***
+(略)
+*** successed to map file : address= 0x0x7f83c2029000; size=0x6400000 *** メモリマップ成功を表示
+
+*** memory map after mapping file ***
+(略)
+7f83c2029000-7f83c8429000 rw-s 00000000 08:06 8917364                    /home/eclair-mickey/Linux_prac/chapter5/testfile testfileをマップしたこと表示
+(略)
+
+file contents before overwrite mapped region: hello testfileの内容を表示
+
+*** overwritten mapped region with: HELLO testfileの更新後の内容を表示
+```
+
